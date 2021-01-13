@@ -1,0 +1,42 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    
+}
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+ul{
+    list-style: none;
+}
+ul li{
+    display: inline;
+}
+ul li a{
+    text-decoration: none;
+}
+canvas{
+    background-color: rgb(255, 255, 255);
+    /* padding: 0 1em;
+    width: calc(100% - 2em);
+    height: 100%; */
+    border: 2px solid;
+    width: 100%;
+    display: block;
+}
+canvas:hover{
+    cursor: pointer;
+}
+
+div {
+    height: calc(20vh );
+    margin-bottom: 1em;
+    padding: 0 1em;
+    text-align: center;
+    font-size: clamp(20px, 3vw, 40px);
+}
