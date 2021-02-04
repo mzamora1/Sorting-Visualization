@@ -47,6 +47,7 @@ for(let div of Array.from(document.getElementsByClassName('root'))){
     index++;
 }
 
+const runningWorkers = [];
 async function startSort(root, canvas, workerFile){
     canvas.width = root.clientWidth;
     canvas.height = root.clientHeight;
@@ -58,7 +59,8 @@ async function startSort(root, canvas, workerFile){
     draw(bars, canvas);
     worker.onmessage = (e) => draw(e.data, canvas);
     await sleep(1000);
-    worker.postMessage(bars)
+    worker.postMessage(bars);
+    runningWorkers.push(worker);
     canvas.onclick = () => {
         worker.terminate();
         canvas.onclick = () => {
@@ -66,3 +68,4 @@ async function startSort(root, canvas, workerFile){
         }
     }
 }
+document.getElementById('homeBtn').onclick = () => runningWorkers.forEach(worker => worker.terminate())

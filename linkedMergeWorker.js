@@ -43,5 +43,4 @@ onmessage = async (e) => {
     console.log("starting sort")
     list.head = await mergeSort(list.head); //finally, set the head to the head of the sorted list
     postMessage(list.head);
-    return list;
 }
