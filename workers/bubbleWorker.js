@@ -1,6 +1,6 @@
 
 function sleep(ms, arr){
-    postMessage(arr);
+    if(arr) postMessage(arr);
     return new Promise(resolve => {
         setTimeout(resolve, ms);
     });
@@ -24,6 +24,7 @@ onmessage = async (e) => {
                 if(array[i].height > array[i+1].height){
                     await swap(array, i, i+1)
                 }
+                else await sleep(0)
             }
         }
         return array;

@@ -14,8 +14,8 @@ onmessage = async (e) => {
             if(resultArray.length){
                 left[leftIndex].color = 'rgb(255,0,0)';
                 right[rightIndex].color = 'rgb(0,0,255)';
-                await sleep(0, resultArray.concat(left.slice(leftIndex), right.slice(rightIndex)));
-                //await sleep(0, [].concat(left, right));
+                //await sleep(0, resultArray.concat(left.slice(leftIndex), right.slice(rightIndex)));
+                await sleep(0, resultArray.concat(left, right));
                 left[leftIndex].color = left[leftIndex].startColor;
                 right[rightIndex].color = right[rightIndex].startColor;
             }

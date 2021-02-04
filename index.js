@@ -1,5 +1,5 @@
-const numOfBars = map(window.innerWidth, 0, 1080, 100, 500);
-console.log(numOfBars)
+import {LinkedList, Node} from './linkedList.js';
+
 function map(value, a, b, c, d){
     value = (value - a) / (b - a); // first map value from (a..b) to (0..1)
     return Math.round(c + value * (d - c)); // then map it from (0..1) to (c..d) and return it
@@ -10,57 +10,44 @@ function sleep(ms){
     });
 }
 
-class Bar {
+class AnimatedLinkedList extends LinkedList{
+    constructor(dataArray){
+        super(dataArray);
+    }
+    sort(worker, canvas) {
+        worker.onmessage = (e) => {
+            console.log(e.data)
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = 'rgb(0, 0, 0)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height); 
+            for(let index = 0, current = e.data; current != null; index++, current = current.next){
+                const {width, x, height, color} = current.data
+                ctx.fillStyle = color;
+                ctx.fillRect(x, height * index, width, height);
+            }
+        }
+        worker.postMessage(this);
+    }
+}
+class Link {
     constructor(canvas){
-        this.width = (canvas.width/ numOfBars);
-        this.height = Math.random() * canvas.height;
-        this.y = canvas.height-this.height;
-        const lightness = map(this.height, 0, canvas.height, 5, 95)
-        //const hue = map(this.height, 0, canvas.height, 0, 359);
+        this.height = canvas.height/numOfLinks;
+        this.width = Math.random() * canvas.width;
+        this.x = (canvas.width/2) - (this.width/2);
+        const lightness = map(this.width, 0, canvas.width, 5, 95)
         this.color = `hsl(100, 75%, ${lightness}%)`
-        //this.color = `hsl(${hue}, 100%, ${50}%)`
         this.startColor = this.color;
     }
-    resize(){
-        this.width = (canvas.width/ numOfBars);
-    }
 }
-
-function draw(array, canvas){
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgb(0, 0, 0)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    array.forEach((bar, i) => {
-        ctx.fillStyle = bar.color;
-        ctx.fillRect(bar.width * i, bar.y, bar.width, bar.height);
-    });
+const root = document.getElementsByClassName('linkedSort')[0];
+const canvas = root.getElementsByTagName('canvas')[0];
+canvas.width = root.clientWidth;
+canvas.height = root.clientHeight;
+const worker = new Worker("./linkedMergeWorker.js", {type: 'module'});
+const aLL = new AnimatedLinkedList();
+const numOfLinks = 80;
+for(let i = 0; i < numOfLinks; i++){
+    aLL.add(new Link(canvas))
 }
-
-const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
-let index = 0;
-for(let div of Array.from(document.getElementsByTagName('div'))){
-    const canvas = div.getElementsByTagName('canvas')[0];
-    startSort(div, canvas, workers[index])
-    index++;
-}
-
-
-async function startSort(root, canvas, workerFile){
-    canvas.width = root.clientWidth;
-    canvas.height = root.clientHeight;
-    const worker = new Worker(workerFile);
-    const bars = [];
-    for(let i = 0; i < numOfBars; i++){
-        bars.push(new Bar(canvas))
-    }
-    draw(bars, canvas);
-    worker.onmessage = (e) => draw(e.data, canvas);
-    await sleep(1000);
-    worker.postMessage(bars)
-    canvas.onclick = () => {
-        worker.terminate();
-        canvas.onclick = () => {
-            startSort(root, canvas, workerFile);
-        }
-    }
-}
+aLL.head.draw(canvas);
+sleep(1000).then(() => aLL.sort(worker, canvas))

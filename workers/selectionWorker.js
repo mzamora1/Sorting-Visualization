@@ -25,8 +25,13 @@ onmessage = async (e) => {
                 if(array[j].height < array[min].height){
                     min = j;
                 } 
-                await sleep(0)
-                //await sleep(4)
+                array[min].color = 'rgb(255, 0, 0)';
+                array[j].color = 'rgb(0, 255, 0)';
+                array[i].color = 'rgb(0, 0, 255)';
+                await sleep(0, array);
+                array[i].color = array[i].startColor;
+                array[j].color = array[j].startColor;
+                array[min].color = array[min].startColor;
             }
             if(min != i) await swap(array, i, min); //swap current value with the min value
             //else await sleep(0)
