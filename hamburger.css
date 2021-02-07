@@ -1,0 +1,27 @@
+.hamburger{
+    position: absolute;
+    left: 1.5em;
+    display: block;
+}
+.hamburger:hover{
+    cursor: pointer;
+}
+.hamburger .line{
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin-top: 5px;
+    transition: all .6s ease-in;
+}
+.hamburger .line.rLeft{
+    margin-bottom: .4em;
+    transform: rotate(45deg);
+}
+.hamburger .line.rRight{
+    margin-top: -.7em;
+    transform: rotate(-45deg);
+}
+.hamburger .line.remove{
+    opacity: 0;
+    transition: none;
+}

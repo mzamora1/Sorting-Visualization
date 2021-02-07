@@ -4,52 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./header.css">
+    <link rel="stylesheet" href="./hamburger.css">
+    <link rel="stylesheet" href="./modal.css">
     <title>Document</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="./pages/algorithms.html">Algorithms</a>
-            </li>
-            <li>
-                <a href="javascript:console.log('hello')">Settings</a>
-            </li>
-            <!-- <li>
-                <a href="#" id="merge">Merge Sort</a>
-            </li>
-            <li>
-                <a href="#" id="quick">Quick Sort</a>
-            </li>
-            <li>
-                <a href="#" id="select">Selection Sort</a>
-            </li> -->
-        </ul>
-    </nav>
-    <h1 style="color: white; text-align: center;">Linked List</h1>
-    <div class="wrapper">
-       <div id="linkedSort">
-           <div class="sortDiv" id="mergeDiv">
-                <h2>Merge Sort</h2>
-                <span style="float: left; color: red;" id="splitSpan">Spliting</span>
-                <span>Head</span>
-                <span style="float: right; color: red;" id="mergeSpan">Merging</span>
-                <div class="root">
-                    <canvas id="mergeLink-canvas"></canvas> 
+
+    <header>
+        <div class="hamburger" id="hamburger">
+            <div class="line" id="rLeft"></div> 
+            <div class="line" id="remove"></div>
+            <div class="line" id="rRight"></div>
+        </div>
+
+        <a class="logo" href="#top">Linked List</a>
+        
+        <nav class="list" id="list">    
+          <h1>Links</h1>
+            <ul>
+                <li>
+                    <a href="./pages/algorithms.html">Algorithms</a>
+                </li>
+                <li>
+                    <a href="#" id="settingsBtn">Settings</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <section id="section">    
+        <div class="wrapper">
+            <div id="linkedSort">
+                <div class="sortDiv" id="mergeDiv">
+                    <h2>Merge Sort</h2>
+                    <span style="float: left; color: red;" id="splitSpan">Spliting</span>
+                    <span>Head</span>
+                    <span style="float: right; color: red;" id="mergeSpan">Merging</span>
+                    <div class="root">
+                        <canvas id="mergeLink-canvas"></canvas> 
+                    </div>
                 </div>
-                   
-           </div>
-           <div class="sortDiv" id="bubbleDiv">
-                <h2>Bubble Sort</h2>
-                <span>Head</span>
-                <div class="root">
-                    <canvas id="bubbleLink-canvas"></canvas> 
+
+                <div class="sortDiv" id="bubbleDiv">
+                    <h2>Bubble Sort</h2>
+                    <span>Head</span>
+                    <div class="root">
+                        <canvas id="bubbleLink-canvas"></canvas> 
+                    </div>
                 </div>
-           </div>
-             
-        </div> 
+            </div> 
+        </div>
+    </section>
+
+    <div class="modal-wrapper hidden" id="modal-wrapper">
+        <div class="modal">
+            <h1>Settings <span id="closeBtn"> &#10005;</span></h1>
+            <form class="modal-inner" id="modal-form">
+                <ul>
+                    <li>
+                        <label for="barInput">Number of Bars:</label>
+                        <input type="text" id="barInput">
+                    </li>
+                    <li>
+                        <label for="colorInput">Color of Bars:</label>
+                        <input type="color" name="color" id="colorInput"> 
+                    </li>
+                    <li>
+                        <button type="submit" id="submitBtn">Sumbit</button>
+                    </li>
+                </ul>
+            </form>
+
+        </div>
     </div>
-    
 
     <script src="./index.js" type="module"></script>
 </body>

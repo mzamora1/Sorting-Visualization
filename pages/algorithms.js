@@ -1,14 +1,21 @@
 //import {globalSleep} from '../index.js';
-import {map, sleep} from '../helpers.js';
+import {map, sleep, setupNav} from '../helpers.js';
 
-
-
-const rootContainer = document.getElementsByClassName('root');
 const numOfBars = map(window.innerWidth, 0, 1080, 100, 500);
-console.log(numOfBars)
-let runningWorkers = [];
-//document.getElementById('homeBtn').onclick = () => runningWorkers.forEach(worker => worker.terminate());
+console.log(numOfBars);
+const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
+const runningWorkers = [];
 window.onbeforeunload = () => runningWorkers.forEach(worker => worker.terminate());
+document.onvisibilitychange = (e) => {
+    runningWorkers.forEach(worker => worker.terminate());
+}
+
+function main(){
+    setupNav();
+    Array.from(document.getElementsByClassName('root')).forEach((div, index) => {
+        startSort(div, workers[index]);
+    })
+}
 
 class Bar {
     constructor(canvas){
@@ -24,10 +31,7 @@ class Bar {
     }
 }
 
-const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
-Array.from(document.getElementsByClassName('root')).forEach((div, index) => {
-    startSort(div, workers[index]);
-})
+
 
 function startSort(root, workerFile){
     const worker = new Worker(`../workers/${workerFile}`, {type: 'module'});
@@ -36,7 +40,6 @@ function startSort(root, workerFile){
     canvas.height = root.clientHeight;
     canvas.onclick = () => {
         worker.terminate();
-        runningWorkers = runningWorkers.filter(w => w !== worker);
         canvas.onclick = () => startSort(root, workerFile);
     }
     const bars = [];
@@ -58,3 +61,5 @@ function draw(array, canvas, ctx){
         ctx.fillRect(bar.width * i, bar.y, bar.width, bar.height);
     });
 }
+
+main();

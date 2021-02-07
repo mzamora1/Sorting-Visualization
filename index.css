@@ -5,12 +5,17 @@
 *{
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+    color: white;
 }
 body{
     background-color: black;
     overflow-x: hidden;
 }
-nav{
+section{
+    margin-top: calc(var(--navHeight) + 1em);
+}
+/* nav{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +33,7 @@ ul{
 a{
     
     color: white;
-}
+} */
 
 
 .wrapper{

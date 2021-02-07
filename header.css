@@ -1,0 +1,63 @@
+
+header{
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: var(--navHeight);
+    width: 100%;
+    background-color: #000000;/* Spotify black */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+
+header .logo{
+    text-decoration: none;
+    color: #1DB954;
+    font-family: 'Inter', sans-serif;
+    font-size: 2em;
+    font-weight: 800;
+    margin: 0 auto;
+  }
+
+header .list{
+    position: fixed;
+    left: 0;
+    top: var(--navHeight);
+    background-color: black;
+    width: 75%;
+    height: calc(100vh - var(--navHeight));
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+    transform: translateX(-110%);
+    transition: transform .6s ease-in;
+  }
+header .list.open{
+    transform: none;
+  }
+
+header .list li{
+      margin-top: 2em;
+      padding: 0 1em;
+  }
+header .list li p{
+      margin-bottom: .7em;
+  }
+header .list li a{
+      text-decoration: none;
+      color: white;
+      border: 2px white solid;
+      border-radius: 30px;
+      padding: 3px 15px;
+      box-shadow: 2px 3px 5px white;
+  }
+header .list li a.active, .list li a:hover{
+    background-color: green;
+    border: none;
+    color: black;
+    font-weight: 700;
+    box-shadow: 2px 3px 5px green;
+}

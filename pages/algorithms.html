@@ -4,49 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="../header.css">
+    <link rel="stylesheet" href="../hamburger.css">
     <title>Document</title>
 </head>
 <body>
-    <nav>
-        <a href="../index.html" id="homeBtn">Home</a>
-    </nav>
 
-    <div class="wrapper">
-        <div id="quick-div" class="normalSort">
-            <h2>Quick Sort</h2>
-            <div class="root" style="width: auto;">
-               <canvas></canvas>   
+    <header>
+        <div class="hamburger" id="hamburger">
+            <div class="line" id="rLeft"></div> 
+            <div class="line" id="remove"></div>
+            <div class="line" id="rRight"></div>
+        </div>
+
+        <a class="logo" href="#top">Sorting</a>
+        
+        <nav class="list" id="list">    
+          <h1>Links</h1>
+            <ul>
+                <li>
+                    <a href="../index.html" id="homeBtn">Home</a>
+                </li>
+                <li>
+                    <a href="javascript:console.log('hello')">Settings</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <section id="section">
+        <div class="wrapper">
+            <div id="quick-div" class="normalSort">
+                <h2>Quick Sort</h2>
+                <div class="root">
+                <canvas></canvas>   
+                </div>
+            </div>
+
+            <div id="merge-div" class="normalSort">
+                <h2>Merge Sort</h2>
+                <div class="root">
+                    <canvas></canvas>   
+                </div>
+            </div>
+            
+            <div id="insert-div" class="normalSort">
+                <h2>Insertion Sort</h2>
+                <div class="root">
+                    <canvas></canvas>   
+                </div> 
+            </div>
+            
+            <div id="select-div" class="normalSort">
+                <h2>Selection Sort</h2>
+                <div class="root">
+                    <canvas></canvas>   
+                </div>
+            </div>
+
+            <div id="bubble-div" class="normalSort">
+                <h2>Bubble Sort</h2>
+                <div class="root">
+                    <canvas></canvas>   
+                </div> 
             </div>
         </div>
+    </section>
 
-        <div id="merge-div" class="normalSort">
-            <h2>Merge Sort</h2>
-            <div class="root">
-                <canvas></canvas>   
-             </div>
-        </div>
-        
-        <div id="insert-div" class="normalSort">
-            <h2>Insertion Sort</h2>
-            <div class="root">
-                <canvas></canvas>   
-             </div> 
-        </div>
-        
-        <div id="select-div" class="normalSort">
-            <h2>Selection Sort</h2>
-            <div class="root">
-                <canvas></canvas>   
-             </div>
-        </div>
-
-        <div id="bubble-div" class="normalSort">
-            <h2>Bubble Sort</h2>
-            <div class="root">
-                <canvas></canvas>   
-             </div> 
-        </div>
-    </div>
     <script src="./algorithms.js" type="module"></script>
 </body>
 </html>

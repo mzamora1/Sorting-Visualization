@@ -1,11 +1,33 @@
 import {LinkedList, Node} from './linkedList/linkedList.js';
-import {map, sleep} from './helpers.js';
+import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
+setupNav();
 
-const splitSpan = document.getElementById("splitSpan");
-const mergeSpan = document.getElementById("mergeSpan");
-const rootContainer = document.getElementById('linkedSort');
+const splitSpan = $("#splitSpan");
+const mergeSpan = $("#mergeSpan");
+const rootContainer = $('#linkedSort');
 const workers = ['linkedMergeWorker.js', 'linkedBubbleWorker.js'];
-const numOfLinks = 50;
+const runningWorkers = [];
+let h = 100, s = 75;
+let numOfLinks = 50;
+
+const init = () => {
+    runningWorkers.forEach(worker => worker.terminate());
+    Array.from(rootContainer.getElementsByClassName('root')).forEach((div, index) => {
+        startSort(div, workers[index]);
+    });
+}
+const form = $('#modal-form');
+const barInput = $('#barInput');
+form.onsubmit = (e) => {
+    e.preventDefault();
+    const hsl = hexToHSL($('#colorInput').value);
+    h = hsl.h, s = hsl.s;
+    if(barInput.value && barInput.value < 500) numOfLinks = barInput.value;
+    else if(barInput.value) alert("Enter smaller number please");
+    barInput.value = null;
+    init();
+}
+
 
 class AnimatedLinkedList extends LinkedList{
     constructor(iterable){
@@ -39,7 +61,7 @@ class AnimatedLinkedList extends LinkedList{
 
             this.draw(canvas, e.data.node);
         }
-        console.log(this)
+        //console.log(this)
         worker.postMessage(this);
     }
 }
@@ -49,15 +71,12 @@ class Link {
         this.width = Math.random() * canvas.width;
         this.x = (canvas.width/2) - (this.width/2);
         const lightness = map(this.width, 0, canvas.width, 5, 95)
-        this.color = `hsl(100, 75%, ${lightness}%)`
+        //this.color = `hsl(100, 75%, ${lightness}%)`
+        this.color = `hsl(${h}, ${s}%, ${lightness}%)`
         this.startColor = this.color;
     }
 }
 
-console.log(rootContainer)
-Array.from(rootContainer.getElementsByClassName('root')).forEach((div, index) => {
-    startSort(div, workers[index]);
-})
 
 async function startSort(root, workerFile){
     const canvas = root.getElementsByTagName('canvas')[0];
@@ -77,24 +96,27 @@ async function startSort(root, workerFile){
     aLL.draw(canvas);
     await sleep(1000);
     aLL.sort(worker, canvas);
-    
+    runningWorkers.push(worker);
 }
 
-const bigArr = []
-for(let i = 0; i < 20; i++){
-    bigArr.push(Math.round(Math.random()*1000))
-}
-//[4,4,4,4,4,6,7,3,4]
-const list = new LinkedList(new AnimatedLinkedList(bigArr));
+// const bigArr = []
+// for(let i = 0; i < 20; i++){
+//     bigArr.push(Math.round(Math.random()*1000))
+// }
+// //[4,4,4,4,4,6,7,3,4]
+// const list = new LinkedList(new AnimatedLinkedList(bigArr));
 
-console.log(list.indexOf(6))
-console.log(list.slice(1, 4))
-list.join(list.clone());
-console.log(list.getAt(0), list.getAt(2))
-//list.removeAllOf(0);
-console.time('sort');
-list.sort();
-console.timeEnd('sort');
-console.log(list.size)
-console.log(list+"");
-console.log(list.constructor === LinkedList)
+// console.log(list.indexOf(6))
+// console.log(list.slice(1, 4))
+// list.join(list.clone());
+// console.log(list.getAt(0), list.getAt(2))
+// //list.removeAllOf(0);
+// console.time('sort');
+// list.sort();
+// console.timeEnd('sort');
+// console.log(list.size)
+// console.log(list+"");
+// console.log(list.constructor === LinkedList);
+
+
+init();
