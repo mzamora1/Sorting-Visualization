@@ -1,16 +1,14 @@
+//import {globalSleep} from '../index.js';
+import {map, sleep} from '../helpers.js';
+
+
+
+const rootContainer = document.getElementsByClassName('root');
 const numOfBars = map(window.innerWidth, 0, 1080, 100, 500);
 console.log(numOfBars)
-
-function map(value, a, b, c, d){
-    value = (value - a) / (b - a); // first map value from (a..b) to (0..1)
-    return Math.round(c + value * (d - c)); // then map it from (0..1) to (c..d) and return it
-}
-
-function sleep(ms){
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-}
+let runningWorkers = [];
+//document.getElementById('homeBtn').onclick = () => runningWorkers.forEach(worker => worker.terminate());
+window.onbeforeunload = () => runningWorkers.forEach(worker => worker.terminate());
 
 class Bar {
     constructor(canvas){
@@ -24,13 +22,35 @@ class Bar {
         //this.color = `hsl(${hue}, 100%, ${50}%)`
         this.startColor = this.color;
     }
-    resize(){
-        this.width = (canvas.width/ numOfBars);
-    }
 }
 
-function draw(array, canvas){
+const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
+Array.from(document.getElementsByClassName('root')).forEach((div, index) => {
+    startSort(div, workers[index]);
+})
+
+function startSort(root, workerFile){
+    const worker = new Worker(`../workers/${workerFile}`, {type: 'module'});
+    const canvas = root.getElementsByTagName('canvas')[0];
+    canvas.width = root.clientWidth;
+    canvas.height = root.clientHeight;
+    canvas.onclick = () => {
+        worker.terminate();
+        runningWorkers = runningWorkers.filter(w => w !== worker);
+        canvas.onclick = () => startSort(root, workerFile);
+    }
+    const bars = [];
+    for(let i = 0; i < numOfBars; i++){
+        bars.push(new Bar(canvas))
+    }
     const ctx = canvas.getContext('2d');
+    draw(bars, canvas, ctx);
+    worker.onmessage = (e) => draw(e.data, canvas, ctx);
+    sleep(1000).then(() => worker.postMessage(bars));
+    runningWorkers.push(worker);
+}
+
+function draw(array, canvas, ctx){
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     array.forEach((bar, i) => {
@@ -38,34 +58,3 @@ function draw(array, canvas){
         ctx.fillRect(bar.width * i, bar.y, bar.width, bar.height);
     });
 }
-
-const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
-let index = 0;
-for(let div of Array.from(document.getElementsByClassName('root'))){
-    const canvas = div.getElementsByTagName('canvas')[0];
-    startSort(div, canvas, workers[index])
-    index++;
-}
-
-const runningWorkers = [];
-async function startSort(root, canvas, workerFile){
-    canvas.width = root.clientWidth;
-    canvas.height = root.clientHeight;
-    const worker = new Worker(`../workers/${workerFile}`);
-    const bars = [];
-    for(let i = 0; i < numOfBars; i++){
-        bars.push(new Bar(canvas))
-    }
-    draw(bars, canvas);
-    worker.onmessage = (e) => draw(e.data, canvas);
-    await sleep(1000);
-    worker.postMessage(bars);
-    runningWorkers.push(worker);
-    canvas.onclick = () => {
-        worker.terminate();
-        canvas.onclick = () => {
-            startSort(root, canvas, workerFile);
-        }
-    }
-}
-document.getElementById('homeBtn').onclick = () => runningWorkers.forEach(worker => worker.terminate())

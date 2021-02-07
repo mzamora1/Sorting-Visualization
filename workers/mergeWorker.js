@@ -40,4 +40,5 @@ onmessage = async (e) => {
     const result = await mergeSort(e.data);
     console.log('merge done!', result)
     postMessage(result)
+    self.close();
 }

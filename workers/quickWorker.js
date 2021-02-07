@@ -1,3 +1,6 @@
+//import globalSleep from '../helpers.js';
+
+
 
 function sleep(ms, arr){
     if(arr) postMessage(arr);
@@ -7,6 +10,7 @@ function sleep(ms, arr){
 }
 
 onmessage =async (e) => {
+    //console.log(globalSleep)
     async function swap(arr, i, j){
         arr[i].color = 'rgb(255, 0, 0)';
         arr[j].color = 'rgb(0, 0, 255)';
@@ -41,4 +45,5 @@ onmessage =async (e) => {
     }
     const result = await quickSort(e.data)
     console.log('quick done', result)
+    self.close();
 }

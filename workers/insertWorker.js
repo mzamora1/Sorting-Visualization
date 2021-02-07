@@ -36,4 +36,5 @@ onmessage = async (e) => {
     const reuslt = await insertionSort(e.data);
     console.log('insert done!', reuslt);
     postMessage(reuslt);
+    self.close();
 }

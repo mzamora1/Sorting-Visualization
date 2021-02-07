@@ -8,15 +8,14 @@
 </head>
 <body>
     <nav>
-        <a href="./pages/algorithms.html">Algorithms</a>
-        <!-- <ul>
+        <ul>
             <li>
-                <a href="./pages/algorithms.html" id="bubble">Bubble Sort</a>
+                <a href="./pages/algorithms.html">Algorithms</a>
             </li>
             <li>
-                <a href="#" id="insert">Insertion Sort</a>
+                <a href="javascript:console.log('hello')">Settings</a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="#" id="merge">Merge Sort</a>
             </li>
             <li>
@@ -24,13 +23,30 @@
             </li>
             <li>
                 <a href="#" id="select">Selection Sort</a>
-            </li>
-        </ul> -->
+            </li> -->
+        </ul>
     </nav>
+    <h1 style="color: white; text-align: center;">Linked List</h1>
     <div class="wrapper">
-       <div class="linkedSort">
-            Merge Sort on a Linked List
-            <canvas id="mergeLink-canvas"></canvas>  
+       <div id="linkedSort">
+           <div class="sortDiv" id="mergeDiv">
+                <h2>Merge Sort</h2>
+                <span style="float: left; color: red;" id="splitSpan">Spliting</span>
+                <span>Head</span>
+                <span style="float: right; color: red;" id="mergeSpan">Merging</span>
+                <div class="root">
+                    <canvas id="mergeLink-canvas"></canvas> 
+                </div>
+                   
+           </div>
+           <div class="sortDiv" id="bubbleDiv">
+                <h2>Bubble Sort</h2>
+                <span>Head</span>
+                <div class="root">
+                    <canvas id="bubbleLink-canvas"></canvas> 
+                </div>
+           </div>
+             
         </div> 
     </div>
     

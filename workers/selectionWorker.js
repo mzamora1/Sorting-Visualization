@@ -42,4 +42,5 @@ onmessage = async (e) => {
     const result = await selectionSort(e.data);
     console.log('selection', result);
     postMessage(result);
+    self.close();
 }

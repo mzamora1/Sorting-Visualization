@@ -32,5 +32,5 @@ onmessage = async (e) => {
     const result = await bubbleSort(e.data);
     console.log('bubble done!', result)
     postMessage(result);
-    
+    self.close();
 }
