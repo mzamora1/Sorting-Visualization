@@ -1,6 +1,6 @@
 import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
-setupNav();
+
 
 const splitSpan = $("#splitSpan");
 const mergeSpan = $("#mergeSpan");
@@ -9,9 +9,31 @@ const workers = ['linkedMergeWorker.js', 'linkedBubbleWorker.js'];
 const runningWorkers = [];
 let h = 100, s = 75;
 let numOfLinks = 50;
+const list = $('#list'), rLeft = $('#rLeft'), remove = $('#remove'), rRight = $('#rRight');
+    $('#hamburger').onclick = () => {
+        rLeft.classList.toggle('rLeft');
+        remove.classList.toggle('remove');
+        rRight.classList.toggle('rRight');
+        list.classList.toggle('open');
+    }
+    //$("#section").onclick = () => closeNav();
 
+    const modalWrapper = $('#modal-wrapper');
+    if(modalWrapper){
+        $('#settingsBtn').onclick = () => modalWrapper.classList.remove('hidden');
+        $('#closeBtn').onclick = () => {
+            modalWrapper.classList.add('hidden');
+            //closeNav();
+        }
+        $('#submitBtn').onclick = () => {
+            modalWrapper.classList.add('hidden');
+            //closeNav();
+        }
+    }
+    else console.warn('no modal')
 const init = () => {
-    runningWorkers.forEach(worker => worker.terminate());
+    setupNav();
+    if(runningWorkers.length) runningWorkers.forEach(worker => worker.terminate());
     Array.from(rootContainer.getElementsByClassName('root')).forEach((div, index) => {
         startSort(div, workers[index]);
     });
