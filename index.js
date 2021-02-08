@@ -1,7 +1,7 @@
 import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
 
-
+console.log('hello world')
 const splitSpan = $("#splitSpan");
 const mergeSpan = $("#mergeSpan");
 const rootContainer = $('#linkedSort');
