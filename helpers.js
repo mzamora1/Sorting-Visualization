@@ -2,9 +2,22 @@ export const map = (value, a, b, c, d) => {
     const temp = (value - a) / (b - a); // first map value from (a..b) to (0..1)
     return Math.round(c + temp * (d - c)); // then map it from (0..1) to (c..d) and return it
 }
+export const constrain = (value, a, b) => {
+    if(value < a) return a;
+    else if(value > b) return b;
+    return value;
+}
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 export const $ = (cssSelector) => document.querySelector(cssSelector);
 export const $all = (cssSelector) => document.querySelectorAll(cssSelector);
+export const create = (tagName, className, content) => {
+   const element = document.createElement(tagName);
+   element.classList.add(className);
+   element.textContent = content;
+   return element;
+}
+
+export const resetTransforms = (ctx) => ctx.setTransform(1, 0, 0, 1, 0, 0);
 
 export const closeNav = () => {
     $('#rLeft').classList.remove('rLeft');

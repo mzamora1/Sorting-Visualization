@@ -129,7 +129,7 @@ export class LinkedList extends Iterable {
     }
 
     contains(value){ //returns true if the list contains value
-        if(this.find(node => node?.data == value) != undefined) return true;
+        if(this.find(node => node?.data == value) !== undefined) return true;
         else return false;
     }
 

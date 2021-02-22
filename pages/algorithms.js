@@ -1,14 +1,13 @@
 //import {globalSleep} from '../index.js';
-import {map, sleep, setupNav} from '../helpers.js';
+import {map, constrain, sleep, setupNav, $} from '../helpers.js';
 
-const numOfBars = map(window.innerWidth, 0, 1080, 100, 500);
+const numOfBars = constrain(map(window.innerWidth, 0, 1080, 100, 500), 100, 500);
 console.log(numOfBars);
 const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
 const runningWorkers = [];
 window.onbeforeunload = () => runningWorkers.forEach(worker => worker.terminate());
-document.onvisibilitychange = (e) => {
-    runningWorkers.forEach(worker => worker.terminate());
-}
+document.onvisibilitychange = (e) => runningWorkers.forEach(worker => worker.terminate());
+$("#stopBtn").onclick = () => runningWorkers.forEach(worker => worker.terminate());
 
 function main(){
     setupNav();
@@ -34,7 +33,7 @@ class Bar {
 
 
 function startSort(root, workerFile){
-    const worker = new Worker(`../workers/${workerFile}`, {type: 'module'});
+    const worker = new Worker(`../workers/${workerFile}`);
     const canvas = root.getElementsByTagName('canvas')[0];
     canvas.width = root.clientWidth;
     canvas.height = root.clientHeight;

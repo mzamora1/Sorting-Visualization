@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./header.css">
     <link rel="stylesheet" href="./hamburger.css">
     <link rel="stylesheet" href="./modal.css">
+    <link rel="stylesheet" href="./linkedList/linkedSort.css">
+    <link rel="stylesheet" href="./linkedList/link.css">
     <title>Document</title>
 </head>
 <body>
@@ -19,6 +21,8 @@
         </div>
 
         <a class="logo" href="#top">Linked List</a>
+
+        <button id="stopBtn">Stop</button>
         
         <nav class="list" id="list">    
           <h1>Links</h1>
@@ -36,32 +40,77 @@
 
 
     <section id="section">    
-        <div class="wrapper">
-            <div id="linkedSort">
-                <div class="sortDiv" id="mergeDiv">
-                    <h2>Merge Sort</h2>
-                    <span style="float: left; color: red;" id="splitSpan">Spliting</span>
-                    <span>Head</span>
-                    <span style="float: right; color: red;" id="mergeSpan">Merging</span>
-                    <div class="root">
-                        <canvas id="mergeLink-canvas"></canvas> 
-                    </div>
-                </div>
+        
 
-                <div class="sortDiv" id="bubbleDiv">
-                    <h2>Bubble Sort</h2>
-                    <span>Head</span>
-                    <div class="root">
-                        <canvas id="bubbleLink-canvas"></canvas> 
-                    </div>
+        <div id="linkedSort">
+
+            <div class="sortDiv" id="mergeDiv">
+                <h2>Merge Sort</h2>
+                
+                <div class="header">
+                    <p style="float: left; color: red;" id="splitSpan">Spliting</p>
+                    <p style="flex: 2;">Head</p>
+                    <p style="float: right; color: red;" id="mergeSpan">Merging</p>
                 </div>
-            </div> 
+                
+                <div class="root">
+                    <canvas id="mergeLink-canvas"></canvas> 
+                </div>
+            </div>
+
+            <div class="sortDiv" id="bubbleDiv">
+                <h2>Bubble Sort</h2>
+                <span>Head</span>
+                <div class="root">
+                    <canvas id="bubbleLink-canvas"></canvas> 
+                </div>
+            </div>
+
+        </div> 
+
+
+
+        <!-- <div class="showcase" id="showCase">
+
+            <div class="showcase-item">
+                <h2>Insertion</h2>
+                <div class="root">
+                    <canvas></canvas>
+                </div>
+            </div>
+        </div> -->
+
+
+        <h2 id="insertion">Insertion</h2>
+        <div class="link-wrapper" >
+
+            <div class="list-head">
+                <h2>List Head</h2>
+                <div class="arrow">
+                    <div class="arrow-rect"></div>
+                    <div class="arrow-triangle"></div>
+                </div>
+            </div>
+            
+            
+            <div class="link hidden">
+                <h3>Node</h3>
+                <div class="rect">Data: <span class="link-data">0</span> </div>
+                <div class="arrow">
+                    <div class="arrow-rect"></div>
+                    <div class="arrow-triangle"></div>
+                </div>
+            </div>
+            <h2 style="color: red;" class="null">Null</h2>
         </div>
+
+        <h2 id="deletion">Deletion</h2>
+        
     </section>
 
     <div class="modal-wrapper hidden" id="modal-wrapper">
         <div class="modal">
-            <h1>Settings <span id="closeBtn"> &#10005;</span></h1>
+            <h1>Settings <span id="closeBtn">&#10005;</span> </h1>
             <form class="modal-inner" id="modal-form">
                 <ul>
                     <li>
@@ -70,7 +119,7 @@
                     </li>
                     <li>
                         <label for="colorInput">Color of Bars:</label>
-                        <input type="color" name="color" id="colorInput"> 
+                        <input type="color" name="color" id="colorInput" value="#1DB954"> 
                     </li>
                     <li>
                         <button type="submit" id="submitBtn">Sumbit</button>
