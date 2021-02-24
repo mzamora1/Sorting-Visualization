@@ -1,6 +1,6 @@
 //import {globalSleep} from '../index.js';
 import {map, constrain, sleep, setupNav, $} from '../helpers.js';
-
+alert('imported');
 const numOfBars = constrain(map(window.innerWidth, 0, 1080, 100, 500), 100, 500);
 console.log(numOfBars);
 const workers = ['quickWorker.js', 'mergeWorker.js', 'insertWorker.js','selectionWorker.js','bubbleWorker.js'];
