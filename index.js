@@ -1,6 +1,6 @@
 import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
-import * as render from './linkedList/render.js';
+//import * as render from './linkedList/render.js';
 import {Rect, Arrow, NewLink} from './linkedList/draw.js';
 alert('imported');
 const splitSpan = $("#splitSpan");
@@ -21,7 +21,7 @@ const init = () => {
     Array.from(sortContainer.getElementsByClassName('root')).forEach((div, index) => {
         startSort(div, workers[index]);
     });
-    startInsertion(true);
+    //startInsertion(true);
     // Array.from(showCase.getElementsByClassName('root')).forEach((div, index) => {
     //     startShowCase(div, workers[index]);
     // });
@@ -126,15 +126,15 @@ async function startShowCase(root, workerFile) {
     // a.draw(ctx);
 }
 
-async function startInsertion(slow = false){
-    let link;
-    for(let i = 0; i < 10; i++){
-        if(slow) await sleep(1000);
-        link = render.createLink(Math.round(Math.random(i)*10));
-        render.addLast(link);
-    }
-    return link;
-}
+// async function startInsertion(slow = false){
+//     let link;
+//     for(let i = 0; i < 10; i++){
+//         if(slow) await sleep(1000);
+//         link = render.createLink(Math.round(Math.random(i)*10));
+//         render.addLast(link);
+//     }
+//     return link;
+// }
 
 async function startDeletion(){
     const deletion = $("#deletion");
