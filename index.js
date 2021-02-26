@@ -2,7 +2,7 @@ import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
 //import * as render from './linkedList/render.js';
 import {Rect, Arrow, NewLink} from './linkedList/draw.js';
-alert('imported');
+
 const splitSpan = $("#splitSpan");
 const mergeSpan = $("#mergeSpan");
 const sortContainer = $('#linkedSort');
@@ -16,7 +16,7 @@ let numOfLinks = 50;
 
 
 const init = () => {
-    alert("initiated");
+    
     runningWorkers.forEach(worker => worker.terminate());
     Array.from(sortContainer.getElementsByClassName('root')).forEach((div, index) => {
         startSort(div, workers[index]);
@@ -52,7 +52,7 @@ class AnimatedLinkedList extends LinkedList{
         ctx.fillStyle = 'rgb(0, 0, 0)';
         ctx.fillRect(0, 0, canvas.width, canvas.height); //cant use for-of because functions dont transfer over postMessages
         for(let index = 0, current = startNode; current != null; index++, current = current.next){
-            const {width, x, height, color} = current.data
+            const {width, x, height, color} = current?.data || console.trace(startNode);
             ctx.fillStyle = color;
             ctx.fillRect(x, height * index, width, height);
         }
@@ -157,8 +157,13 @@ for(let i = 0; i < 20; i++){
 const list = new LinkedList(new AnimatedLinkedList(bigArr));
 
 console.log(list.indexOf(6))
-console.log(list.slice(1, 4))
-
+list.filter((node, index) => {
+    console.log(node, index);
+    if(node.data == 0) return true;
+})
+console.log(LinkedList.Of(10).toString())
+console.log(list.tail)
+console.log(list.insertAt(list.slice(0), list.size-1).toString());
 list.join(list.clone());
 console.log(list.toString())
 console.log(list.getAt(-1), list.getAt(2))
