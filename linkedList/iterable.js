@@ -10,7 +10,7 @@ export default class Iterable {
     *[Symbol.iterator]() {
         for(let currentNode = this.head || this; currentNode !== null; currentNode = currentNode.next){
             if(currentNode === undefined) {
-                console.warn('Iterable has been corrupted', 'color: red; font-size: 40px');
+                console.warn('Iterable has been corrupted', 'color: red; font-size: 50px');
                 break;
             }
             else yield currentNode; // passes currentNode back to calling function

@@ -55,7 +55,7 @@ onmessage = async (e) => {
         }//so at the end, slow will be in the middle of the list
         return slow;
     }
-    const list = e.data;
+    const list = JSON.parse(e.data);
     console.log("starting sort", e.data);
     list.head = await mergeSort(list.head); //finally, set the head to the head of the sorted list
     console.log("done sorting!",list.head)

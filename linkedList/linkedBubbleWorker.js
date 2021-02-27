@@ -17,7 +17,7 @@ async function swap(head, nodeA, nodeB){//swaps data in nodes a and b
 
 onmessage = async (e) => {
     console.log('worker start', e.data.head?.data.width)
-    const list = e.data;
+    const list = JSON.parse(e.data);
     for(let end = list.size-1; end > 1; end--){
         for(let i = 0, current = list.head; current != null && i < end; i++, current = current.next){
             if(current.data.width > current.next.data.width){

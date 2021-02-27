@@ -7,9 +7,11 @@ export const constrain = (value, a, b) => {
     else if(value > b) return b;
     return value;
 }
+export const pipe = (...funcs) => arg => funcs.reduce((value, func) => func(value), arg); 
+export const compose = (...funcs) => arg => funcs.reduceRight((value, func) => func(value), arg); 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-export const $ = (cssSelector) => document.querySelector(cssSelector);
-export const $all = (cssSelector) => document.querySelectorAll(cssSelector);
+export const $ = cssSelector => document.querySelector(cssSelector);
+export const $all = cssSelector => document.querySelectorAll(cssSelector);
 export const create = (tagName, className, content) => {
    const element = document.createElement(tagName);
    element.classList.add(className);
@@ -57,12 +59,11 @@ export const hexToHSL = function hexToHSL(hex) {
     let r = parseInt(result[1], 16),
         g = parseInt(result[2], 16),
         b = parseInt(result[3], 16);
-        r /= 255, g /= 255, b /= 255
+        r /= 255, g /= 255, b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let h, s, l = (max + min) / 2;
-    if(max == min){
-        h = s = 0; // achromatic
-    }else{
+    if(max === min) h = s = 0; // achromatic
+    else{
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch(max){

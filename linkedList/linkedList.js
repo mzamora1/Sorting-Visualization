@@ -1,6 +1,5 @@
 import Iterable from "./iterable.js";
 
-
 /**
  * represents a Node in a LinkedList
  * @extends Iterable
@@ -324,7 +323,7 @@ export class LinkedList extends Iterable {
      */
     reduce(func, initalValue = 0){ //similar to forEach except it provides an accumulator while looping through list
         let accumulator = initalValue;//will 'reduce' the list down to one value
-        this.forEach((node, index) => void(accumulator = func(accumulator, node, index)));
+        this.forEach((node, index) => void (accumulator = func(accumulator, node, index)));
         return accumulator;
     }
 
@@ -453,7 +452,6 @@ export class LinkedList extends Iterable {
             }
             return result;//a and b have now been merged into a semi-sorted list
         }
-
 
         this.head = mergeSort(this.head); //finally, set this head to the head of the sorted list
         return this;

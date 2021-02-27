@@ -1,4 +1,5 @@
-import {LinkedList, Node} from './linkedList/linkedList.js';
+import {LinkedList, Node} from './linkedList/tempLinkedList.js';
+//import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
 //import * as render from './linkedList/render.js';
 import {Rect, Arrow, NewLink} from './linkedList/draw.js';
@@ -73,8 +74,8 @@ class AnimatedLinkedList extends LinkedList{
             }
             this.draw(canvas, e.data.node);
         }
-        //console.log(this)
-        worker.postMessage(this);
+        console.log(JSON.stringify(this))
+        worker.postMessage(JSON.stringify(this));
     }
 }
 class Link {
@@ -154,26 +155,28 @@ for(let i = 0; i < 20; i++){
     bigArr.push(i)
 }
 //[4,4,4,4,4,6,7,3,4]
-const list = new LinkedList(new AnimatedLinkedList(bigArr));
 
-console.log(list.indexOf(6))
-list.filter((node, index) => {
-    console.log(node, index);
-    if(node.data == 0) return true;
-})
+const list = new LinkedList(new AnimatedLinkedList(bigArr));
+console.log(list)
+list.forEach(node => console.log(node))
+ console.log(list.indexOf(6))
+// list.filter((node, index) => {
+//     console.log(node, index);
+//     if(node.data == 0) return true;
+// })
 console.log(LinkedList.Of(10).toString())
-console.log(list.tail)
-console.log(list.insertAt(list.slice(0), list.size-1).toString());
-list.join(list.clone());
-console.log(list.toString())
-console.log(list.getAt(-1), list.getAt(2))
-//list.removeAllOf(0);
-console.time('sort');
-list.sort();
-console.timeEnd('sort');
-console.log(list.size)
-console.log(list+"");
-console.log(list.constructor === LinkedList);
+// console.log(list.tail)
+// console.log(list.insertAt(list.slice(0), list.size-1).toString());
+// list.join(list.clone());
+// console.log(list.toString())
+// console.log(list.getAt(-1), list.getAt(2))
+// //list.removeAllOf(0);
+// console.time('sort');
+// list.sort();
+// console.timeEnd('sort');
+// console.log(list.size)
+// console.log(list+"");
+// console.log(list.constructor === LinkedList);
 
 
 init();
