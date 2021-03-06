@@ -10,15 +10,14 @@ export const createArrow = () => {
 }
 
 export const createLink = (value) => {
-    
-    const copy = $(".link").cloneNode(true);
-    copy.classList.remove('hidden');
-    const span = copy.querySelector('.link-data');
+    console.log($("template#link").content.firstElementChild.cloneNode(true))
+    const link = $("template#link").content.firstElementChild.cloneNode(true);
+    const span = link.querySelector('.link-data');
     span.textContent = value;
     // const wrapper = $('.link-wrapper')
     // wrapper.insertBefore(copy, $(".null"));
     // $(".null").scrollIntoView();
-    return copy;
+    return link;
 }
 
 export const addLast = (link) => {
@@ -53,7 +52,7 @@ export const removeActive = (link) => {
 }
 
 export const createList = () => {
-    
+
 }
 // const container = create('div', 'link-wrapper');
 

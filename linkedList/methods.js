@@ -3,8 +3,13 @@ import {Node, LinkedList} from './tempLinkedList.js';
  * defines mixins that can be used to create a Node or Linked List
  * @module methods
  */
-
-
+function isInBounds(index, size){
+    if(typeof index !== 'number' || index >= size || index < 0){
+        console.warn(`%cIndex ${index} is out of bounds\nSize: `, 'color: yellow', size); 
+        return false;
+    } 
+    else return true;
+}
 
 /**
 * @param {*} supperClass constructor to inherit from
@@ -42,7 +47,7 @@ export const canAdd = supperClass => {
         }
         insertAt(data, index = this.size - 1){
             const prevNode = this.getAt(index);
-            if(data instanceof Iterator){
+            if('clone' in Object(data)){
                 const clone = data.clone();
                 const oldNext = prevNode.next;
                 prevNode.next = clone.head;
@@ -85,13 +90,7 @@ export const canAdd = supperClass => {
 */
 export const canIterate = supperClass => {
     console.log('made new Iterator')
-    function isInBounds(index, self){
-        if(typeof index !== 'number' || index >= self.size || index < 0){
-            console.warn(`%cIndex ${index} is out of bounds\n`, 'color: yellow', self); 
-            return false;
-        } 
-        else return true;
-    }
+    
     /**
      * @mixin Iterator
      * @memberof LinkedList.prototype
@@ -125,7 +124,7 @@ export const canIterate = supperClass => {
         }
         reduce(func, initalValue = 0){ //similar to forEach except it provides an accumulator while looping through list
             let accumulator = initalValue;//will 'reduce' the list down to one value
-            this.forEach((node, index) => void (accumulator = func(accumulator, node, index)));
+            this.forEach((node, index) => void(accumulator = func(accumulator, node, index)));
             return accumulator;
         }
         map(func){
@@ -136,20 +135,37 @@ export const canIterate = supperClass => {
             })
             return newList;
         }
-        clone(){ this.map(node => node)}
-        fill(){ value => this.forEach(node => node.data = value)}
+        clone(){ 
+            return this.map(node => node)
+        }
+        fill(value){ 
+            this.forEach(node => node.data = value)
+        }
         getAt(index){
-            if(!isInBounds(index, this)) return;
-            if(index === this.size - 1) return this.tail;
-            return this.find((node, i) => i === index ? node : false)
+            if(!isInBounds(index, this.size)) return;
+            else if(this instanceof LinkedList && index === this.size - 1) return this.tail;
+            else return this.find((node, i) => i === index ? node : false)
         }
         indexOf(value){
             const index = this.find((node, index) => node.data === value && index);
             return index === undefined ? -1 : index;
         }
         occurancesOf(value){
-            const indexes = this.map(node => node.data === value ? node : undefined);
-            return indexes.size;
+            const matches = this.map(node => node.data === value ? node : undefined);
+            return matches.size;
+        }
+        average(){
+            return this.reduce((sum, current) => sum + current.data) / this.size;
+        }
+        slice(start, end = this.size){
+            if(!isInBounds(start, this.size)) return;
+            const newList = new LinkedList();
+            let startIndex = start;
+            for(const current of this.getAt(start)){
+                if(startIndex++ < end) newList.add(current.data);
+                else break;
+            }
+            return newList;
         }
     };
 }// end of canIterate
@@ -179,7 +195,7 @@ export const canRemove = superClass => {
             return removed;
         }
         removeAt(index){
-            if(!this.isInBounds(index)) return;
+            if(!isInBounds(index, this.size)) return;
             if(index === 0) return this.popFirst();
             const previous = this.getAt(index-1);
             const removed = previous.next;

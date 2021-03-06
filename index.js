@@ -1,7 +1,7 @@
 import {LinkedList, Node} from './linkedList/tempLinkedList.js';
 //import {LinkedList, Node} from './linkedList/linkedList.js';
 import {map, sleep, setupNav, $, hexToHSL} from './helpers.js';
-//import * as render from './linkedList/render.js';
+import * as render from './linkedList/render.js';
 import {Rect, Arrow, NewLink} from './linkedList/draw.js';
 
 const splitSpan = $("#splitSpan");
@@ -22,7 +22,7 @@ const init = () => {
     Array.from(sortContainer.getElementsByClassName('root')).forEach((div, index) => {
         startSort(div, workers[index]);
     });
-    //startInsertion(true);
+    startInsertion(true);
     // Array.from(showCase.getElementsByClassName('root')).forEach((div, index) => {
     //     startShowCase(div, workers[index]);
     // });
@@ -74,7 +74,7 @@ class AnimatedLinkedList extends LinkedList{
             }
             this.draw(canvas, e.data.node);
         }
-        console.log(JSON.stringify(this))
+        //console.log(JSON.stringify(this))
         worker.postMessage(JSON.stringify(this));
     }
 }
@@ -127,15 +127,15 @@ async function startShowCase(root, workerFile) {
     // a.draw(ctx);
 }
 
-// async function startInsertion(slow = false){
-//     let link;
-//     for(let i = 0; i < 10; i++){
-//         if(slow) await sleep(1000);
-//         link = render.createLink(Math.round(Math.random(i)*10));
-//         render.addLast(link);
-//     }
-//     return link;
-// }
+async function startInsertion(slow = false){
+    let link;
+    for(let i = 0; i < 10; i++){
+        if(slow) await sleep(1000);
+        link = render.createLink(Math.round(Math.random(i)*10));
+        render.addLast(link);
+    }
+    return link;
+}
 
 async function startDeletion(){
     const deletion = $("#deletion");
@@ -157,26 +157,26 @@ for(let i = 0; i < 20; i++){
 //[4,4,4,4,4,6,7,3,4]
 
 const list = new LinkedList(new AnimatedLinkedList(bigArr));
-console.log(list)
+console.log(list.toString())
 list.forEach(node => console.log(node))
  console.log(list.indexOf(6))
-// list.filter((node, index) => {
-//     console.log(node, index);
-//     if(node.data == 0) return true;
-// })
+list.filter((node, index) => {
+    console.log(node, index);
+    if(node.data == 0) return true;
+})
 console.log(LinkedList.Of(10).toString())
-// console.log(list.tail)
-// console.log(list.insertAt(list.slice(0), list.size-1).toString());
-// list.join(list.clone());
-// console.log(list.toString())
-// console.log(list.getAt(-1), list.getAt(2))
-// //list.removeAllOf(0);
-// console.time('sort');
-// list.sort();
-// console.timeEnd('sort');
-// console.log(list.size)
-// console.log(list+"");
-// console.log(list.constructor === LinkedList);
+console.log(list.tail)
+console.log(list.insertAt(list.slice(0), list.size-1).toString());
+list.join(list.clone());
+console.log(list.toString())
+console.log(list.getAt(-1), list.getAt(2))
+//list.removeAllOf(0);
+console.time('sort');
+list.sort();
+console.timeEnd('sort');
+console.log(list.size)
+console.log(list+"");
+console.log(list.constructor === LinkedList);
 
 
 init();
